@@ -34,6 +34,8 @@ import PropertyRowCard from "./property-row-card";
 import MapSearchView, { BoundsFilter } from "../map-search";
 import PropertyCard from "./property-card";
 import ListingWidget from "../shared/listing-widget";
+import { FlatList } from "../ui/flat-list";
+import { AlertCircle, Home } from "lucide-react";
 
 function RealEstateFilterPageContent(props: any) {
   useTranslation("filters");
@@ -57,7 +59,7 @@ function RealEstateFilterPageContent(props: any) {
     neLng: props.neLng ? Number(props.neLng) : undefined,
   });
 
-  const { data, isLoading } = useListings(parsedParams);
+  const { data, isLoading, isError } = useListings(parsedParams);
 
   const form = useForm<PropertyFiltersValues, any, PropertyFiltersValues>({
     // @ts-ignore
@@ -110,10 +112,10 @@ function RealEstateFilterPageContent(props: any) {
         <ListingWidget
           withProvider
           defaultView="row-card"
-          className="mx-auto w-full max-w-7xl px-4 pt-4 lg:px-6 xl:px-8"
+          className="mx-auto w-full max-w-7xl pt-4"
           cardsView={
-            <div className="grid gap-8 lg:grid-cols-[310px_minmax(0,1fr)] xl:gap-10">
-              <aside className="hidden lg:block">
+            <div className="flex gap-8 xl:gap-10">
+              <aside className="hidden flex-1 max-w-[350px] lg:block">
                 <Form {...form}>
                   <div className="sticky top-24 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
                     <MainFilters
@@ -124,7 +126,7 @@ function RealEstateFilterPageContent(props: any) {
                   </div>
                 </Form>
               </aside>
-              <main className="min-w-0">
+              <main className="min-w-0 flex-1">
                 <div className="overflow-hidden mb-4 rounded-2xl border border-zinc-200 bg-white shadow-sm">
                   <PropertyFilters
                     resetFilters={resetFilters}
@@ -133,15 +135,41 @@ function RealEstateFilterPageContent(props: any) {
                     loading={isLoading}
                   />
                 </div>
-                <div className="grid gap-6 sm:grid-cols-2 [1560px]:grid-cols-3">
-                  {listings.map((property) => (
+                <FlatList
+                  data={listings}
+                  listClassName="grid gap-6 sm:grid-cols-2 [1560px]:grid-cols-3"
+                  isLoading={isLoading}
+                  isError={isError}
+                  ErrorComponent={
+                    <div className="flex flex-col items-center justify-center py-20 text-center rounded-2xl border border-red-100 bg-red-50/50">
+                      <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
+                      <h3 className="text-lg font-semibold text-red-900">Failed to load properties</h3>
+                      <p className="text-sm text-red-600 max-w-sm mt-1">
+                        An error occurred while fetching the properties. Please try again later.
+                      </p>
+                      <button onClick={() => window.location.reload()} className="mt-4 px-4 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md transition-colors text-sm font-medium">
+                        Retry
+                      </button>
+                    </div>
+                  }
+                  LoadingComponent={<div className="py-10 text-center text-muted-foreground">Loading...</div>}
+                  ListEmptyComponent={
+                    <div className="flex flex-col items-center justify-center py-20 text-center">
+                      <Home className="h-12 w-12 text-muted-foreground/50 mb-4" />
+                      <h3 className="text-lg font-semibold text-zinc-900">No properties found</h3>
+                      <p className="text-sm text-zinc-500 max-w-sm mt-1">
+                        We couldn't find any properties matching your current filters. Try adjusting your search criteria.
+                      </p>
+                    </div>
+                  }
+                  renderItem={(property) => (
                     <PropertyCard
                       key={property.id}
                       listing={(property as any).original ?? property}
                       locale={locale}
                     />
-                  ))}
-                </div>
+                  )}
+                />
               </main>
             </div>
           }
@@ -167,12 +195,40 @@ function RealEstateFilterPageContent(props: any) {
                     loading={isLoading}
                   />
                 </div>
-                {listings.map((property) => (
-                  <PropertyRowCard
-                    key={property.id}
-                    property={(property as any).original ?? property}
-                  />
-                ))}
+                <FlatList
+                  data={listings}
+                  listClassName="space-y-4"
+                  isLoading={isLoading}
+                  isError={isError}
+                  ErrorComponent={
+                    <div className="flex flex-col items-center justify-center py-20 text-center rounded-2xl border border-red-100 bg-red-50/50">
+                      <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
+                      <h3 className="text-lg font-semibold text-red-900">Failed to load properties</h3>
+                      <p className="text-sm text-red-600 max-w-sm mt-1">
+                        An error occurred while fetching the properties. Please try again later.
+                      </p>
+                      <button onClick={() => window.location.reload()} className="mt-4 px-4 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md transition-colors text-sm font-medium">
+                        Retry
+                      </button>
+                    </div>
+                  }
+                  LoadingComponent={<div className="py-10 text-center text-muted-foreground">Loading...</div>}
+                  ListEmptyComponent={
+                    <div className="flex flex-col items-center justify-center py-20 text-center rounded-2xl border border-dashed border-zinc-200">
+                      <Home className="h-12 w-12 text-muted-foreground/50 mb-4" />
+                      <h3 className="text-lg font-semibold text-zinc-900">No properties found</h3>
+                      <p className="text-sm text-zinc-500 max-w-sm mt-1">
+                        We couldn't find any properties matching your current filters. Try adjusting your search criteria.
+                      </p>
+                    </div>
+                  }
+                  renderItem={(property) => (
+                    <PropertyRowCard
+                      key={property.id}
+                      property={(property as any).original ?? property}
+                    />
+                  )}
+                />
               </main>
             </div>
           }
