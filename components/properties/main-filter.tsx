@@ -98,17 +98,65 @@ const MainFilters = ({ form, onSubmit, resetFilters }: Props) => {
       {/* Price Range Section */}
       <div>
         <h3 className="text-sm font-semibold mt-6 mb-3">{t("price_range")}</h3>
-        <div className="space-y-3">
-          {/* Decorative histogram bars */}
-          <div className="flex items-end gap-1 h-12 px-2">
-            {[40, 65, 85, 100, 75, 50, 30].map((height, idx) => (
-              <div
-                key={idx}
-                className="flex-1 bg-primary/20 rounded-t"
-                style={{ height: `${height}%` }}
-              />
-            ))}
+        <div className="space-y-4">
+          {/* Interactive histogram bars */}
+          <div className="relative flex items-end gap-1 h-16 px-1">
+            {[
+              { value: 100000, height: 40 },
+              { value: 500000, height: 65 },
+              { value: 1000000, height: 85 },
+              { value: 2000000, height: 100 },
+              { value: 3000000, height: 75 },
+              { value: 5000000, height: 50 },
+              { value: 10000000, height: 30 },
+            ].map((bar, idx) => {
+              const isSelected = 
+                (!form.watch("minPrice") || form.watch("minPrice")! <= bar.value) &&
+                (!form.watch("maxPrice") || form.watch("maxPrice")! >= bar.value);
+              
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  className={`flex-1 rounded-t transition-all duration-200 cursor-pointer hover:opacity-80 ${
+                    isSelected 
+                      ? "bg-primary hover:bg-primary/90" 
+                      : "bg-primary/20 hover:bg-primary/30"
+                  }`}
+                  style={{ height: `${bar.height}%` }}
+                  onClick={() => {
+                    const currentMin = form.watch("minPrice");
+                    const currentMax = form.watch("maxPrice");
+                    
+                    if (!currentMin && !currentMax) {
+                      // First click - set max
+                      form.setValue("maxPrice", bar.value);
+                    } else if (currentMin && !currentMax) {
+                      // Has min, set max
+                      if (bar.value >= currentMin) {
+                        form.setValue("maxPrice", bar.value);
+                      } else {
+                        form.setValue("minPrice", bar.value);
+                      }
+                    } else if (!currentMin && currentMax) {
+                      // Has max, set min
+                      if (bar.value <= currentMax) {
+                        form.setValue("minPrice", bar.value);
+                      } else {
+                        form.setValue("maxPrice", bar.value);
+                      }
+                    } else {
+                      // Has both, reset and start over
+                      form.setValue("minPrice", undefined);
+                      form.setValue("maxPrice", bar.value);
+                    }
+                  }}
+                />
+              );
+            })}
           </div>
+          
+          {/* Min/Max inputs */}
           <div className="flex items-center gap-2">
             <FormField
               control={form.control}
@@ -129,7 +177,7 @@ const MainFilters = ({ form, onSubmit, resetFilters }: Props) => {
                 </FormItem>
               )}
             />
-            <span className="text-zinc-400">-</span>
+            <span className="text-zinc-400 font-medium">-</span>
             <FormField
               control={form.control}
               name="maxPrice"
@@ -149,6 +197,35 @@ const MainFilters = ({ form, onSubmit, resetFilters }: Props) => {
                 </FormItem>
               )}
             />
+          </div>
+          
+          {/* Quick price presets */}
+          <div className="flex flex-wrap gap-2">
+            {[
+              { label: "100K", value: 100000 },
+              { label: "500K", value: 500000 },
+              { label: "1M", value: 1000000 },
+              { label: "2M", value: 2000000 },
+              { label: "5M", value: 5000000 },
+            ].map((preset) => (
+              <Button
+                key={preset.value}
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-7 px-2 text-xs"
+                onClick={() => {
+                  const currentMin = form.watch("minPrice");
+                  if (!currentMin) {
+                    form.setValue("minPrice", preset.value);
+                  } else {
+                    form.setValue("maxPrice", preset.value);
+                  }
+                }}
+              >
+                {preset.label}
+              </Button>
+            ))}
           </div>
         </div>
       </div>

@@ -44,10 +44,10 @@ const PropertyRowCard = ({ property }: Props) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex flex-col sm:flex-row">
+      <div className="flex flex-col sm:flex-row p-4 gap-4">
         {/* Image Section */}
-        <Link href={`/${locale}/listings/${property.id}`} className="relative block w-full sm:w-72 md:w-80 flex-shrink-0 overflow-hidden">
-          <div className="aspect-[4/3] sm:aspect-auto sm:h-full min-h-[200px] bg-gradient-to-br from-zinc-100 to-zinc-200">
+        <Link href={`/${locale}/listings/${property.id}`} className="relative block w-full sm:w-72 md:w-80 flex-shrink-0">
+          <div className="aspect-[4/3] sm:aspect-auto sm:h-full min-h-[200px] rounded-xl overflow-hidden bg-gradient-to-br from-zinc-100 to-zinc-200">
             {imageSrc ? (
               <>
                 <img
@@ -57,7 +57,7 @@ const PropertyRowCard = ({ property }: Props) => {
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
               </>
             ) : (
               <div className="flex h-full w-full items-center justify-center">
@@ -101,7 +101,7 @@ const PropertyRowCard = ({ property }: Props) => {
         </Link>
 
         {/* Content Section */}
-        <div className="flex-1 p-5">
+        <div className="flex-1 py-1">
           <div className="flex flex-col h-full">
             {/* Header: Title + Price */}
             <div className="flex items-start justify-between gap-4 mb-3">
