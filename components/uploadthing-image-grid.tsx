@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn, loadImage } from "@/lib/utils";
 
 interface ImageItem {
   id: string;
@@ -151,7 +151,7 @@ export function UploadThingImageGrid({
             className="relative aspect-square rounded-lg overflow-hidden bg-muted border border-border group"
           >
             <img
-              src={image.url}
+              src={loadImage(image.url)}
               alt={image.name || "Uploaded image"}
               className="w-full h-full object-cover"
             />

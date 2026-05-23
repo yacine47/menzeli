@@ -1,6 +1,6 @@
 import { ListingResource } from '@/api';
 import { API_URL } from '@/lib/api-config';
-import { formatPrice } from '@/lib/utils';
+import { formatPrice, loadImage } from '@/lib/utils';
 import React from 'react'
 
 type Props = {
@@ -24,7 +24,7 @@ export default function MapListCard({
   onMouseLeave,
 }: Props) {
   
-  const img = property.image ? `${property.image}` : null;
+  const img = property.image ? loadImage(property.image) : null;
 
   return (
     <div

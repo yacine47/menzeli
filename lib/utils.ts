@@ -5,6 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export { loadImage, getProfileImageUrl } from './image-utils'
+
 export const fileToUrl = (file: File): string => {
   return URL.createObjectURL(file)
 }

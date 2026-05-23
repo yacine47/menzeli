@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "../globals.css";
 import initTranslations from "@/app/i18n";
 import TranslationsProvider from "@/components/providers/TranslationsProvider";
@@ -11,19 +11,10 @@ import { ConfigSite } from "@/lib/conf";
 import { Toaster } from "@/components/ui/sonner";
 import { WidgetProvider } from "../../components/providers/widget-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const ibm = IBM_Plex_Sans({
+const ibm = IBM_Plex_Sans_Arabic({
   variable: "--font-ibm",
-  // subsets: ["arabic"],
+  subsets: ["arabic", "latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -50,7 +41,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={dir(locale)}>
       <body
-        className={`${!isArabic ? geistSans.variable : ""} ${!isArabic ? geistMono.variable : ""} ${isArabic ? ibm.variable : ""} antialiased ${isArabic ? "font-ibm" : ""}`}
+        className={`${ibm.variable} font-sans antialiased`}
       >
         <TranslationsProvider locale={locale} namespaces={["common"]} resources={resources}>
           <QueryProvider>

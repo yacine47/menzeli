@@ -143,6 +143,12 @@ export interface ListingResource {
      */
     isNegotiable: boolean;
     /**
+     * Whether the listing has an active boost applied.
+     * @type {string}
+     * @memberof ListingResource
+     */
+    isBoosted: string;
+    /**
      * 'boost_level' => $this->boost_level,
      * @type {string}
      * @memberof ListingResource
@@ -232,6 +238,7 @@ export function instanceOfListingResource(value: object): value is ListingResour
     if (!('numberPersons' in value) || value['numberPersons'] === undefined) return false;
     if (!('isReady' in value) || value['isReady'] === undefined) return false;
     if (!('isNegotiable' in value) || value['isNegotiable'] === undefined) return false;
+    if (!('isBoosted' in value) || value['isBoosted'] === undefined) return false;
     if (!('moderationStatus' in value) || value['moderationStatus'] === undefined) return false;
     if (!('image' in value) || value['image'] === undefined) return false;
     if (!('timePost' in value) || value['timePost'] === undefined) return false;
@@ -259,6 +266,7 @@ export function ListingResourceFromJSONTyped(json: any, ignoreDiscriminator: boo
         'numberPersons': json['number_persons'],
         'isReady': json['is_ready'],
         'isNegotiable': json['is_negotiable'],
+        'isBoosted': json['is_boosted'] ?? '0',
         'moderationStatus': json['moderation_status'],
         'image': json['image'],
         'rentDuration': json['rent_duration'] == null ? undefined : RentDurationResourceFromJSON(json['rent_duration']),
@@ -298,6 +306,7 @@ export function ListingResourceToJSONTyped(value?: ListingResource | null, ignor
         'number_persons': value['numberPersons'],
         'is_ready': value['isReady'],
         'is_negotiable': value['isNegotiable'],
+        'is_boosted': value['isBoosted'],
         'moderation_status': value['moderationStatus'],
         'image': value['image'],
         'rent_duration': RentDurationResourceToJSON(value['rentDuration']),

@@ -16,6 +16,7 @@ import { useAuth } from "@/components/providers/auth"
 import { useTranslation } from "react-i18next"
 import Link from "next/link"
 import { API_URL } from "@/lib/api-config"
+import { getProfileImageUrl } from "@/lib/utils"
 
 
 
@@ -49,10 +50,7 @@ const UserDropdown = () => {
   // Helper to get profile image
   const getProfileImage = () => {
     if ('profileImage' in user && user.profileImage) {
-        
-      if(user.profileImage.startsWith('http')) return user.profileImage;
-      const imageUrl = `${user.profileImage}`
-      return imageUrl
+      return getProfileImageUrl({ profileImage: user.profileImage }) || undefined
     }
     return undefined
   }

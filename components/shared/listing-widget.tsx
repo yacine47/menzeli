@@ -28,21 +28,6 @@ function ListingWidgetContent({
       onValueChange={(nextValue) => setView(nextValue as WidgetView)}
       className={className}
     >
-      <TabsList>
-        <TabsTrigger value="cards">
-          <LayoutGrid className="h-4 w-4" />
-          Cards
-        </TabsTrigger>
-        <TabsTrigger value="row-card">
-          <List className="h-4 w-4" />
-          List
-        </TabsTrigger>
-        <TabsTrigger value="map">
-          <Map className="h-4 w-4" />
-          Map
-        </TabsTrigger>
-      </TabsList>
-
       <TabsContent value="cards">{cardsView}</TabsContent>
       <TabsContent value="row-card">{rowCardsView}</TabsContent>
       <TabsContent value="map">{mapView}</TabsContent>

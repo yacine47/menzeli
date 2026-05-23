@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Search } from "lucide-react";
+import { Search, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   FormField,
@@ -11,219 +11,255 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { UseFormReturn } from "react-hook-form";
 import { PropertyFiltersValues } from "./property-filters";
 import {
   useCategories,
   usePropertyTypes,
   useWilayas,
+  useCities as useCitiesHook,
 } from "@/hooks/use-details";
-import { DetailsCities200ResponseData } from "@/api";
 
 type Props = {
   form: UseFormReturn<PropertyFiltersValues>;
   onSubmit: (data: PropertyFiltersValues) => void;
   resetFilters: () => void;
-  selectedWilaya?: number;
-  cities?: DetailsCities200ResponseData;
 };
 
-const MainFilters = ({ form, onSubmit, resetFilters, selectedWilaya, cities }: Props) => {
+const MainFilters = ({ form, onSubmit, resetFilters }: Props) => {
   const { t, i18n } = useTranslation("filters");
   
   const { data: categories } = useCategories({ locale: i18n.language as "en" });
   const { data: propertyTypes } = usePropertyTypes({ locale: i18n.language as "en" });
-  const { data: wilayas } = useWilayas({ locale: i18n.language as "en" });
+  const { data: wilayasData } = useWilayas({ locale: i18n.language as "en" });
+  const selectedWilaya = form.watch("wilayaId");
+  const { data: citiesData } = useCitiesHook(selectedWilaya, i18n.language as "en");
 
   return (
     <div className="grid gap-4 py-4 px-4">
-      {/* Property Type */}
-      <FormField
-        control={form.control}
-        name="typeId"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t("property_type")}</FormLabel>
-            <Select onValueChange={field.onChange} value={field.value?.toString()}>
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder={t("select_type")} />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {propertyTypes?.map((type) => (
-                  <SelectItem key={type.id} value={type.id.toString()}>
+      {/* Property Type Section */}
+      <div>
+        <h3 className="text-sm font-semibold mb-3">{t("property_type")}</h3>
+        <div className="space-y-2 max-h-[200px] overflow-y-auto">
+          {propertyTypes?.map((type) => (
+            <FormField
+              key={type.id}
+              control={form.control}
+              name="typeId"
+              render={({ field }) => (
+                <FormItem className="flex items-center space-x-2 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value === type.id}
+                      onCheckedChange={(checked) => {
+                        field.onChange(checked ? type.id : undefined);
+                      }}
+                    />
+                  </FormControl>
+                  <label className="text-sm cursor-pointer flex-1" onClick={() => field.onChange(type.id)}>
                     {type.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </FormItem>
-        )}
-      />
-
-      {/* Category */}
-      <FormField
-        control={form.control}
-        name="categoryId"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t("category")}</FormLabel>
-            <Select onValueChange={field.onChange} value={field.value?.toString()}>
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder={t("select_category")} />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {categories?.map((category) => (
-                  <SelectItem key={category.id} value={category.id.toString()}>
-                    {category.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </FormItem>
-        )}
-      />
-
-      {/* Location */}
-      <div className="grid grid-cols-2 gap-2">
-        <FormField
-          control={form.control}
-          name="wilayaId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("wilaya")}</FormLabel>
-              <Select
-                onValueChange={(val) => {
-                  field.onChange(val);
-                  form.setValue("cityId", undefined);
-                }}
-                value={field.value?.toString()}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("select_wilaya")} />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {wilayas?.wilayas?.map((wilaya) => (
-                    <SelectItem key={wilaya.id} value={wilaya.id.toString()}>
-                      {wilaya.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="cityId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("city")}</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                value={field.value?.toString()}
-                disabled={!selectedWilaya}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("select_city")} />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {cities?.cities?.map((city) => (
-                    <SelectItem key={city.id} value={city.id.toString()}>
-                      {city.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}
-        />
+                  </label>
+                </FormItem>
+              )}
+            />
+          ))}
+        </div>
       </div>
 
-      {/* Price Range */}
-      <div className="space-y-2">
-        <FormLabel>{t("price_range")}</FormLabel>
-        <div className="flex items-center gap-2">
+      {/* Rooms Section - Chip Buttons */}
+      <div>
+        <h3 className="text-sm font-semibold mt-6 mb-3">{t("rooms")}</h3>
+        <div className="flex flex-wrap gap-2">
+          {[1, 2, 3, 4, 5].map((num) => (
+            <Button
+              key={num}
+              type="button"
+              variant={form.watch("numberRooms") === num ? "default" : "outline"}
+              size="sm"
+              className="rounded-full"
+              onClick={() => form.setValue("numberRooms", num)}
+            >
+              {num}
+            </Button>
+          ))}
+          <Button
+            type="button"
+            variant={form.watch("numberRooms") === 6 ? "default" : "outline"}
+            size="sm"
+            className="rounded-full"
+            onClick={() => form.setValue("numberRooms", 6)}
+          >
+            5+
+          </Button>
+        </div>
+      </div>
+
+      {/* Price Range Section */}
+      <div>
+        <h3 className="text-sm font-semibold mt-6 mb-3">{t("price_range")}</h3>
+        <div className="space-y-3">
+          {/* Decorative histogram bars */}
+          <div className="flex items-end gap-1 h-12 px-2">
+            {[40, 65, 85, 100, 75, 50, 30].map((height, idx) => (
+              <div
+                key={idx}
+                className="flex-1 bg-primary/20 rounded-t"
+                style={{ height: `${height}%` }}
+              />
+            ))}
+          </div>
+          <div className="flex items-center gap-2">
+            <FormField
+              control={form.control}
+              name="minPrice"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder={t("min") || "Min"}
+                      value={field.value ?? ""}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        field.onChange(value === "" ? undefined : Number(value));
+                      }}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <span className="text-zinc-400">-</span>
+            <FormField
+              control={form.control}
+              name="maxPrice"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder={t("max") || "Max"}
+                      value={field.value ?? ""}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        field.onChange(value === "" ? undefined : Number(value));
+                      }}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Location - Wilaya Section */}
+      <div>
+        <h3 className="text-sm font-semibold mt-6 mb-3">{t("wilaya")}</h3>
+        <div className="space-y-2 max-h-[150px] overflow-y-auto">
+          {wilayasData?.wilayas?.map((wilaya) => (
+            <FormField
+              key={wilaya.id}
+              control={form.control}
+              name="wilayaId"
+              render={({ field }) => (
+                <FormItem className="flex items-center space-x-2 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value === wilaya.id}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          field.onChange(wilaya.id);
+                          form.setValue("cityId", undefined);
+                        } else {
+                          field.onChange(undefined);
+                        }
+                      }}
+                    />
+                  </FormControl>
+                  <label className="text-sm cursor-pointer flex-1" onClick={() => {
+                    field.onChange(wilaya.id);
+                    form.setValue("cityId", undefined);
+                  }}>
+                    {wilaya.name}
+                  </label>
+                </FormItem>
+              )}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Location - City Section */}
+      {selectedWilaya && citiesData && (
+        <div>
+          <h3 className="text-sm font-semibold mt-6 mb-3">{t("city")}</h3>
+          <div className="space-y-2 max-h-[150px] overflow-y-auto">
+            {citiesData.cities?.map((city) => (
+              <FormField
+                key={city.id}
+                control={form.control}
+                name="cityId"
+                render={({ field }) => (
+                  <FormItem className="flex items-center space-x-2 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value === city.id}
+                        onCheckedChange={(checked) => {
+                          field.onChange(checked ? city.id : undefined);
+                        }}
+                      />
+                    </FormControl>
+                    <label className="text-sm cursor-pointer flex-1" onClick={() => field.onChange(city.id)}>
+                      {city.name}
+                    </label>
+                  </FormItem>
+                )}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Quick Toggles - Preferences */}
+      <div>
+        <h3 className="text-sm font-semibold mt-6 mb-3">Preferences</h3>
+        <div className="space-y-2">
           <FormField
             control={form.control}
-            name="minPrice"
-            render={({ field: { value, ...rest } }) => (
-              <FormItem className="flex-1">
+            name="isReady"
+            render={({ field }) => (
+              <FormItem className="flex items-center space-x-2 space-y-0">
                 <FormControl>
-                  <Input
-                    type="number"
-                    placeholder={t("min")}
-                    {...rest}
-                    value={value ?? ""}
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
                   />
                 </FormControl>
+                <label className="text-sm cursor-pointer">{t("ready_to_move") || "Ready to Move"}</label>
               </FormItem>
             )}
           />
-          <span>-</span>
           <FormField
             control={form.control}
-            name="maxPrice"
-            render={({ field: { value, ...rest } }) => (
-              <FormItem className="flex-1">
+            name="isNegotiable"
+            render={({ field }) => (
+              <FormItem className="flex items-center space-x-2 space-y-0">
                 <FormControl>
-                  <Input
-                    type="number"
-                    placeholder={t("max")}
-                    {...rest}
-                    value={value ?? ""}
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
                   />
                 </FormControl>
+                <label className="text-sm cursor-pointer">{t("negotiable") || "Negotiable"}</label>
               </FormItem>
             )}
           />
         </div>
       </div>
 
-      {/* Rooms & Persons */}
-      <div className="grid grid-cols-2 gap-2">
-        <FormField
-          control={form.control}
-          name="numberRooms"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("rooms")}</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder={t("number_rooms_placeholder")} {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="numberPersons"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("persons")}</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder={t("number_persons_placeholder")} {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-      </div>
-
-      <div className="flex gap-2 pt-4">
+      {/* Footer Actions */}
+      <div className="flex gap-2 pt-4 mt-6 border-t">
         <Button type="button" variant="outline" className="flex-1" onClick={resetFilters}>
           {t("reset")}
         </Button>

@@ -4,6 +4,7 @@ import { useEffect, useRef, useCallback, RefObject } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import type {  BoundsFilter } from "./map-search";
 import { ListingResource } from "@/api";
+import { loadImage } from "@/lib/utils";
 
 const ALGERIA_CENTER: [number, number] = [3.0, 36.5];
 const DEFAULT_ZOOM = 5.5;
@@ -35,7 +36,7 @@ function formatPrice(price: number) {
 
 // ─── Rich Popup Card ────────────────────────────────────────────────────────
 function PopupCard({ property }: { property: ListingResource }) {
-  const img = property.image ? `${property.image}` : null;
+  const img = property.image ? loadImage(property.image) : null;
 
   return (
     <div

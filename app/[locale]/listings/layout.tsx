@@ -21,12 +21,11 @@ export default async function ListingsLayout({
       namespaces={["common", "listings"]}
       resources={resources}
     >
-      <div className="min-h-screen bg-white font-sans text-zinc-900">
+      <div className="min-h-screen bg-muted/20 font-sans text-zinc-900">
         <Header page="home" />
-        <div className="max-w-7xl min-h-[70vh] flex flex-col items-center justify-center mx-auto px-4 sm:px-6 md:px-8">
-        {children}
-
-        </div>
+        <main className="mx-auto max-w-7xl px-4 pt-28 pb-16 sm:px-6 md:px-8">
+          {children}
+        </main>
         <Footer />
       </div>
     </TranslationsProvider>
