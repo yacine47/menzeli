@@ -95,6 +95,7 @@
   },
   "report_modal": {
     "trigger": "Signaler l'annonce",
+    "description_short": "Signaler du contenu inapproprié, des arnaques ou des informations incorrectes",
     "title": "Signaler cette annonce",
     "description": "Indiquez pourquoi vous signalez cette annonce. Notre equipe va la verifier.",
     "reason_label": "Motif",

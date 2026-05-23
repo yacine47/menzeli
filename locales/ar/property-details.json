@@ -26,7 +26,8 @@
     "amenities": "المرافق",
     "nearby_places": "الأماكن القريبة",
     "property_details": "تفاصيل العقار",
-    "location": "الموقع"
+    "location": "الموقع",
+    "reviews": "التقييمات"
   },
   "status": {
     "ready_to_move": "جاهز للسكن",
@@ -75,5 +76,25 @@
     "full_name": "الاسم الكامل",
     "enter_name": "أدخل اسمك الكامل",
     "submit": "حجز"
+  },
+  "quick_actions": {
+    "title": "إجراءات سريعة",
+    "call_agent": "الاتصال بالوكيل",
+    "send_email": "إرسال بريد إلكتروني",
+    "whatsapp": "واتساب"
+  },
+  "reviews": {
+    "review": "تقييم",
+    "reviews": "التقييمات",
+    "no_reviews_title": "لا توجد تقييمات بعد",
+    "no_reviews_description": "كن أول من يشارك تجربته مع هذا العقار",
+    "be_first": "اكتب تقييماً",
+    "verified": "موثق",
+    "show_more": "عرض المزيد",
+    "show_less": "عرض أقل",
+    "show_all": "عرض جميع التقييمات {{count}}",
+    "show_less_all": "عرض أقل",
+    "helpful": "مفيد",
+    "report": "إبلاغ"
   }
 }

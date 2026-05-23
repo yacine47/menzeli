@@ -44,7 +44,7 @@ const PropertyRowCard = ({ property }: Props) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex flex-col sm:flex-row p-4 gap-4">
+      <div className="flex flex-col sm:flex-row px-4 gap-4">
         {/* Image Section */}
         <Link href={`/${locale}/listings/${property.id}`} className="relative block w-full sm:w-72 md:w-80 flex-shrink-0">
           <div className="aspect-[4/3] sm:aspect-auto sm:h-full min-h-[200px] rounded-xl overflow-hidden bg-gradient-to-br from-zinc-100 to-zinc-200">
@@ -219,15 +219,6 @@ const PropertyRowCard = ({ property }: Props) => {
                     {new Date(property.timePost).toLocaleDateString()}
                   </span>
                 )}
-              </div>
-
-              <div className="flex items-center gap-2">
-                <ApplicationModal>
-                  <Button size="sm" className="gap-2">
-                    Contact Owner
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </ApplicationModal>
               </div>
             </div>
           </div>

@@ -40,7 +40,7 @@ const LANGUAGES: { code: "ar" | "fr" | "en"; label: string }[] = [
 ];
 
 export default function Header(props: HeaderProps) {
-  const { page = "home" } = props;
+  const { page } = props;
   const { user } = useAuth();
   const { i18n } = useTranslation();
   const currentLocale = i18n.language;

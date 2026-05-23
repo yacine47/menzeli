@@ -22,7 +22,7 @@ export default async function ListingsLayout({
       resources={resources}
     >
       <div className="min-h-screen bg-muted/20 font-sans text-zinc-900">
-        <Header page="home" />
+        <Header />
         <main className="mx-auto max-w-7xl px-4 pt-28 pb-16 sm:px-6 md:px-8">
           {children}
         </main>

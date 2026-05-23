@@ -11,7 +11,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   return (
     <TranslationsProvider locale={locale} namespaces={['common', 'contact']} resources={resources}>
       <div className="min-h-screen bg-white font-sans text-zinc-900">
-        <Header page="home" />
+        <Header />
         <ContactSection />
         <Footer />
       </div>

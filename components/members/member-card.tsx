@@ -1,5 +1,5 @@
 import { API_URL } from "@/lib/api-config";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Mail } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -92,48 +92,43 @@ const MemberCard = ({ member, isLoading, listingId, listingType }: Props) => {
   }
 
   return (
-    <Card className="bg-muted/50 shadow-none">
-      <CardContent className="space-y-5 pt-5">
+    <Card className="bg-gradient-to-br from-white to-zinc-50 shadow-lg border-zinc-200 overflow-hidden">
+      <CardContent className="space-y-5 pt-6">
         <div className="flex items-start gap-4">
-          <Avatar size="lg" className="size-14 border">
+          <Avatar size="lg" className="size-16 border-2 border-primary/20 shadow-md">
             <AvatarImage
               src={getProfileImageUrl({ profileImage: member?.profileImage }) || undefined}
               alt={member?.name ?? t("agent.fallback_name")}
             />
-            <AvatarFallback>{fallbackText}</AvatarFallback>
+            <AvatarFallback className="text-lg font-bold bg-primary/10 text-primary">{fallbackText}</AvatarFallback>
           </Avatar>
           <div className="min-w-0 flex-1">
-            <h3 className="text-base font-bold leading-tight">{member?.name}</h3>
+            <h3 className="text-lg font-bold leading-tight text-zinc-900">{member?.name}</h3>
             {member?.memberVerified && (
-              <div className="flex items-center gap-1 text-green-600 text-xs mt-0.5">
-                <CheckCircle2 className="w-3 h-3" />
+              <div className="flex items-center gap-1.5 text-emerald-600 text-xs mt-1 font-medium">
+                <CheckCircle2 className="w-4 h-4" />
                 {t("agent.verified")}
+              </div>
+            )}
+            {member?.phone && (
+              <div className="mt-2 text-sm text-zinc-600 font-medium">
+                {member?.phone}
               </div>
             )}
           </div>
         </div>
-        <Separator />
-        <div className="space-y-2 text-sm">
-          {member?.phone && (
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">
-                {t("details.office_phone")}
-              </span>
-              <span className="font-medium">{member?.phone}</span>
-            </div>
-          )}
+        <Separator className="bg-zinc-200" />
+        <div className="space-y-3 text-sm">
           {member?.email && (
-            <div className="flex justify-between gap-2">
-              <span className="text-muted-foreground shrink-0">
-                {t("details.email")}
-              </span>
-              <span className="font-medium text-right truncate">
-                {member?.email}
-              </span>
+            <div className="flex items-start gap-2">
+              <Mail className="w-4 h-4 text-zinc-500 mt-0.5 shrink-0" />
+              <span className="text-zinc-600 break-all">{member?.email}</span>
             </div>
           )}
         </div>
-        <Button className="w-full">{t("agent.contact_owner")}</Button>
+        <Button className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-6 rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:-translate-y-0.5">
+          {t("agent.contact_owner")}
+        </Button>
       </CardContent>
     </Card>
   );

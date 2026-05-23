@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { LocationResource } from "@/api/models/LocationResource";
 import { Skeleton } from "@/components/ui/skeletor";
+import { MapPin } from "lucide-react";
 
 type Props = {
   location?: LocationResource;
@@ -84,9 +85,10 @@ const LocationPlace = ({ location, isLoading, className }: Props) => {
   }
 
   return (
-    <div className={`overflow-hidden rounded-xl border ${className ?? ""}`}>
-      <div ref={containerRef} className="h-64 w-full" />
-      <div className="border-t bg-background px-3 py-2 text-xs text-muted-foreground">
+    <div className={`overflow-hidden rounded-2xl border border-zinc-200 shadow-lg bg-white ${className ?? ""}`}>
+      <div ref={containerRef} className="h-80 w-full" />
+      <div className="border-t border-zinc-200 bg-gradient-to-r from-zinc-50 to-white px-4 py-3 text-sm font-medium text-zinc-700 flex items-center gap-2">
+        <MapPin className="w-4 h-4 text-primary" />
         {location?.city}, {location?.wilaya}, {location?.country}
       </div>
     </div>

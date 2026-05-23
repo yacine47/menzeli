@@ -19,7 +19,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   return (
     <TranslationsProvider locale={locale} namespaces={['common', 'about']} resources={resources}>
       <div className="min-h-screen bg-white font-sans text-zinc-900">
-        <Header page="home" />
+        <Header />
 
         <main className="isolate">
           {/* Hero section */}

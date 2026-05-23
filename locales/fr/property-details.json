@@ -26,7 +26,8 @@
     "amenities": "Commodites",
     "nearby_places": "Lieux a proximite",
     "property_details": "Details du bien",
-    "location": "Emplacement"
+    "location": "Emplacement",
+    "reviews": "Avis"
   },
   "status": {
     "ready_to_move": "Pret a emmenager",
@@ -74,5 +75,25 @@
     "full_name": "Nom complet",
     "enter_name": "Entrez votre nom complet",
     "submit": "Planifier"
+  },
+  "quick_actions": {
+    "title": "Actions Rapides",
+    "call_agent": "Appeler l'Agent",
+    "send_email": "Envoyer un Email",
+    "whatsapp": "WhatsApp"
+  },
+  "reviews": {
+    "review": "Avis",
+    "reviews": "Avis",
+    "no_reviews_title": "Pas encore d'avis",
+    "no_reviews_description": "Soyez le premier à partager votre expérience avec ce bien",
+    "be_first": "Écrire un avis",
+    "verified": "Vérifié",
+    "show_more": "Voir plus",
+    "show_less": "Voir moins",
+    "show_all": "Voir tous les {{count}} avis",
+    "show_less_all": "Voir moins",
+    "helpful": "Utile",
+    "report": "Signaler"
   }
 }

@@ -95,6 +95,7 @@
   },
   "report_modal": {
     "trigger": "Report Listing",
+    "description_short": "Flag inappropriate content, scams, or inaccurate information",
     "title": "Report This Listing",
     "description": "Tell us why you are reporting this listing. Our team will review it.",
     "reason_label": "Reason",

@@ -26,7 +26,8 @@
     "amenities": "Amenities",
     "nearby_places": "Nearby Places",
     "property_details": "Property Details",
-    "location": "Location"
+    "location": "Location",
+    "reviews": "Reviews"
   },
   "status": {
     "ready_to_move": "Ready To Move",
@@ -74,5 +75,25 @@
     "full_name": "Full Name",
     "enter_name": "Enter your full name",
     "submit": "Schedule"
+  },
+  "quick_actions": {
+    "title": "Quick Actions",
+    "call_agent": "Call Agent",
+    "send_email": "Send Email",
+    "whatsapp": "WhatsApp"
+  },
+  "reviews": {
+    "review": "Review",
+    "reviews": "Reviews",
+    "no_reviews_title": "No Reviews Yet",
+    "no_reviews_description": "Be the first to share your experience with this property",
+    "be_first": "Write a Review",
+    "verified": "Verified",
+    "show_more": "Show More",
+    "show_less": "Show Less",
+    "show_all": "Show All {{count}} Reviews",
+    "show_less_all": "Show Less",
+    "helpful": "Helpful",
+    "report": "Report"
   }
 }
