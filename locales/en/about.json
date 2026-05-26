@@ -1,6 +1,11 @@
 {
   "title": "About {{ siteName }}",
   "subtitle": "Revolutionizing Real Estate in Algeria",
+  "badge": "Est. 2024 · Algeria",
+  "hero": {
+    "line1": "The smarter way to find",
+    "line2": "home in Algeria"
+  },
   "mission": {
     "title": "Our Mission",
     "description": "To simplify the process of buying, selling, and renting properties in Algeria through transparency, technology, and trust."
@@ -10,8 +15,34 @@
     "users": "Active Users",
     "cities": "Cities Covered"
   },
+  "values": {
+    "heading": "Built on three pillars",
+    "subheading": "Every decision we make comes back to the three principles that define who we are and how we serve Algerians.",
+    "transparency": {
+      "title": "Transparency",
+      "description": "Honest pricing, verified listings, and no hidden fees. What you see is exactly what you get."
+    },
+    "technology": {
+      "title": "Technology",
+      "description": "Powerful search, smart filters, and an intuitive experience built for how Algerians actually look for homes."
+    },
+    "trust": {
+      "title": "Trust",
+      "description": "Every listing is reviewed. Every agent is vetted. Your safety and confidence come first, always."
+    }
+  },
+  "quote": {
+    "text": "We believe everyone in Algeria deserves a place they can truly call home — and we're here to make that journey easier.",
+    "team": "Team"
+  },
   "team": {
+    "eyebrow": "The people behind it",
     "title": "Meet our team",
-    "description": "We’re a dynamic group of individuals who are passionate about what we do and dedicated to delivering the best results for our clients."
+    "description": "We're a dynamic group of individuals passionate about reshaping how Algerians discover, buy, and rent property."
+  },
+  "cta": {
+    "title": "Find your next home today",
+    "description": "Join thousands of Algerians who've already found their perfect property with Menzeli.",
+    "button": "Explore Listings"
   }
 }

@@ -1,6 +1,11 @@
 {
   "title": "À propos de {{ siteName }}",
   "subtitle": "Révolutionner l'immobilier en Algérie",
+  "badge": "Depuis 2024 · Algérie",
+  "hero": {
+    "line1": "La façon intelligente de trouver",
+    "line2": "votre maison en Algérie"
+  },
   "mission": {
     "title": "Notre Mission",
     "description": "Simplifier le processus d'achat, de vente et de location de biens immobiliers en Algérie grâce à la transparence, la technologie et la confiance."
@@ -10,8 +15,34 @@
     "users": "Utilisateurs Actifs",
     "cities": "Villes Couvertes"
   },
+  "values": {
+    "heading": "Fondé sur trois piliers",
+    "subheading": "Chaque décision que nous prenons revient aux trois principes qui définissent qui nous sommes et comment nous servons les Algériens.",
+    "transparency": {
+      "title": "Transparence",
+      "description": "Prix honnêtes, annonces vérifiées, sans frais cachés. Ce que vous voyez est exactement ce que vous obtenez."
+    },
+    "technology": {
+      "title": "Technologie",
+      "description": "Recherche puissante, filtres intelligents et une expérience intuitive conçue pour la façon dont les Algériens cherchent vraiment."
+    },
+    "trust": {
+      "title": "Confiance",
+      "description": "Chaque annonce est examinée. Chaque agent est vérifié. Votre sécurité et votre confiance passent avant tout."
+    }
+  },
+  "quote": {
+    "text": "Nous croyons que chaque Algérien mérite un endroit qu'il peut vraiment appeler chez soi — et nous sommes là pour rendre ce voyage plus facile.",
+    "team": "Équipe"
+  },
   "team": {
+    "eyebrow": "Les personnes derrière",
     "title": "Rencontrez notre équipe",
-    "description": "Nous sommes un groupe dynamique de personnes passionnées par ce que nous faisons et dévouées à fournir les meilleurs résultats pour nos clients."
+    "description": "Nous sommes un groupe dynamique de personnes passionnées par la façon dont les Algériens découvrent, achètent et louent des propriétés."
+  },
+  "cta": {
+    "title": "Trouvez votre prochaine maison aujourd'hui",
+    "description": "Rejoignez des milliers d'Algériens qui ont déjà trouvé leur bien idéal avec Menzeli.",
+    "button": "Explorer les Annonces"
   }
 }
